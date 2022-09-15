@@ -17,6 +17,7 @@ import java.time.Duration;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -52,19 +53,19 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
     private int interactionCount = 0;
 
     private void glideMouse(
-            final String locator,
-            final int waitTime,
-            final ExpectedConditionCallback expectedConditionCallback) {
+        final String locator,
+        final int waitTime,
+        final ExpectedConditionCallback expectedConditionCallback) {
         MOUSE_MOVEMENT_UTILS.mouseGlide(
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> SIMPLE_BY.getElement(
                 getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> SIMPLE_BY.getElement(
-                        getWebDriver(),
-                        locator,
-                        waitTime,
-                        expectedConditionCallback),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+                locator,
+                waitTime,
+                expectedConditionCallback),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
     }
 
     private WebElement getElementById(final String id, final int waitTime) {
@@ -124,17 +125,17 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementById(id, getDefaultExplicitWaitTime()),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementById(id, getDefaultExplicitWaitTime()),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().clickElementWithId(
-                    id,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
+                id,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
         }
     }
 
@@ -143,17 +144,17 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementById(id, waitTime),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementById(id, waitTime),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().clickElementWithId(
-                    id,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
+                id,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
         }
     }
 
@@ -162,18 +163,18 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementById(id, getDefaultExplicitWaitTime()),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementById(id, getDefaultExplicitWaitTime()),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().selectOptionByTextFromSelectWithId(
-                    optionText,
-                    id,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
+                optionText,
+                id,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
         }
     }
 
@@ -182,18 +183,18 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementById(id, waitTime),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementById(id, waitTime),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().selectOptionByTextFromSelectWithId(
-                    optionText,
-                    id,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
+                optionText,
+                id,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
         }
     }
 
@@ -202,18 +203,18 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementById(id, getDefaultExplicitWaitTime()),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementById(id, getDefaultExplicitWaitTime()),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().populateElementWithId(
-                    id,
-                    text,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
+                id,
+                text,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
         }
     }
 
@@ -222,18 +223,18 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementById(id, waitTime),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementById(id, waitTime),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().populateElementWithId(
-                    id,
-                    text,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
+                id,
+                text,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
         }
     }
 
@@ -242,17 +243,17 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementByXPath(xpath, getDefaultExplicitWaitTime()),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementByXPath(xpath, getDefaultExplicitWaitTime()),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().clickElementWithXPath(
-                    xpath,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
+                xpath,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
         }
     }
 
@@ -261,17 +262,17 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementByXPath(xpath, waitTime),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementByXPath(xpath, waitTime),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().clickElementWithXPath(
-                    xpath,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
+                xpath,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
         }
     }
 
@@ -280,18 +281,18 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementByXPath(xpath, getDefaultExplicitWaitTime()),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementByXPath(xpath, getDefaultExplicitWaitTime()),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().selectOptionByTextFromSelectWithXPath(
-                    optionText,
-                    xpath,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
+                optionText,
+                xpath,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
         }
     }
 
@@ -300,18 +301,18 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementByXPath(xpath, waitTime),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementByXPath(xpath, waitTime),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().selectOptionByTextFromSelectWithXPath(
-                    optionText,
-                    xpath,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
+                optionText,
+                xpath,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
         }
     }
 
@@ -320,18 +321,18 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementByXPath(xpath, getDefaultExplicitWaitTime()),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementByXPath(xpath, getDefaultExplicitWaitTime()),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().populateElementWithXPath(
-                    xpath,
-                    text,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
+                xpath,
+                text,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
         }
     }
 
@@ -340,18 +341,18 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementByXPath(xpath, waitTime),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementByXPath(xpath, waitTime),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().populateElementWithXPath(
-                    xpath,
-                    text,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
+                xpath,
+                text,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
         }
     }
 
@@ -360,17 +361,17 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementByCSSSelector(cssSelector, getDefaultExplicitWaitTime()),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementByCSSSelector(cssSelector, getDefaultExplicitWaitTime()),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().clickElementWithCSSSelector(
-                    cssSelector,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
+                cssSelector,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
         }
     }
 
@@ -379,17 +380,17 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementByCSSSelector(cssSelector, waitTime),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementByCSSSelector(cssSelector, waitTime),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().clickElementWithCSSSelector(
-                    cssSelector,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
+                cssSelector,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
         }
     }
 
@@ -398,18 +399,18 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementByCSSSelector(cssSelector, getDefaultExplicitWaitTime()),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementByCSSSelector(cssSelector, getDefaultExplicitWaitTime()),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().selectOptionByTextFromSelectWithCSSSelector(
-                    optionText,
-                    cssSelector,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
+                optionText,
+                cssSelector,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
         }
     }
 
@@ -418,18 +419,18 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementByCSSSelector(cssSelector, waitTime),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementByCSSSelector(cssSelector, waitTime),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().selectOptionByTextFromSelectWithCSSSelector(
-                    optionText,
-                    cssSelector,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
+                optionText,
+                cssSelector,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
         }
     }
 
@@ -438,18 +439,18 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementByCSSSelector(cssSelector, getDefaultExplicitWaitTime()),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementByCSSSelector(cssSelector, getDefaultExplicitWaitTime()),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().populateElementWithCSSSelector(
-                    cssSelector,
-                    text,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
+                cssSelector,
+                text,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
         }
     }
 
@@ -458,18 +459,18 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementByCSSSelector(cssSelector, waitTime),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementByCSSSelector(cssSelector, waitTime),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().populateElementWithCSSSelector(
-                    cssSelector,
-                    text,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
+                cssSelector,
+                text,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
         }
     }
 
@@ -478,17 +479,17 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementByName(name, getDefaultExplicitWaitTime()),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementByName(name, getDefaultExplicitWaitTime()),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().clickElementWithName(
-                    name,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
+                name,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
         }
     }
 
@@ -497,17 +498,17 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementByName(name, waitTime),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementByName(name, waitTime),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().clickElementWithName(
-                    name,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
+                name,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
         }
     }
 
@@ -516,18 +517,18 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementByName(name, getDefaultExplicitWaitTime()),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementByName(name, getDefaultExplicitWaitTime()),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().selectOptionByTextFromSelectWithName(
-                    optionText,
-                    name,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
+                optionText,
+                name,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
         }
     }
 
@@ -536,18 +537,18 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementByName(name, waitTime),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementByName(name, waitTime),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().selectOptionByTextFromSelectWithName(
-                    optionText,
-                    name,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
+                optionText,
+                name,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
         }
     }
 
@@ -556,18 +557,18 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementByName(name, getDefaultExplicitWaitTime()),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementByName(name, getDefaultExplicitWaitTime()),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().populateElementWithName(
-                    name,
-                    text,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
+                name,
+                text,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime());
         }
     }
 
@@ -576,18 +577,18 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
         ++interactionCount;
 
         MOUSE_MOVEMENT_UTILS.mouseGlide(
-                getWebDriver(),
-                (JavascriptExecutor) getWebDriver(),
-                () -> getElementByName(name, waitTime),
-                Constants.MOUSE_MOVE_TIME,
-                Constants.MOUSE_MOVE_STEPS);
+            getWebDriver(),
+            (JavascriptExecutor) getWebDriver(),
+            () -> getElementByName(name, waitTime),
+            Constants.MOUSE_MOVE_TIME,
+            Constants.MOUSE_MOVE_STEPS);
 
         if (getAutomatedBrowser() != null) {
             getAutomatedBrowser().populateElementWithName(
-                    name,
-                    text,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
+                name,
+                text,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime);
         }
     }
 
@@ -597,28 +598,28 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
 
         try {
             MOUSE_MOVEMENT_UTILS.mouseGlide(
+                getWebDriver(),
+                (JavascriptExecutor) getWebDriver(),
+                () -> SIMPLE_BY.getElement(
                     getWebDriver(),
-                    (JavascriptExecutor) getWebDriver(),
-                    () -> SIMPLE_BY.getElement(
-                            getWebDriver(),
-                            locator,
-                            getDefaultExplicitWaitTime(),
-                            by -> force == null
-                                    ? ExpectedConditions.elementToBeClickable(by)
-                                    : ExpectedConditions.presenceOfElementLocated(by)),
-                    Constants.MOUSE_MOVE_TIME,
-                    Constants.MOUSE_MOVE_STEPS,
-                    force != null);
+                    locator,
+                    getDefaultExplicitWaitTime(),
+                    by -> force == null
+                        ? ExpectedConditions.elementToBeClickable(by)
+                        : ExpectedConditions.presenceOfElementLocated(by)),
+                Constants.MOUSE_MOVE_TIME,
+                Constants.MOUSE_MOVE_STEPS,
+                force != null);
 
             if (getAutomatedBrowser() != null) {
                 getAutomatedBrowser().clickElementIfExists(
-                        force,
-                        locator,
-                        SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                                Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime(),
-                        ifExistsOption);
+                    force,
+                    locator,
+                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                        Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime(),
+                    ifExistsOption);
             }
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -631,28 +632,28 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
 
         try {
             MOUSE_MOVEMENT_UTILS.mouseGlide(
+                getWebDriver(),
+                (JavascriptExecutor) getWebDriver(),
+                () -> SIMPLE_BY.getElement(
                     getWebDriver(),
-                    (JavascriptExecutor) getWebDriver(),
-                    () -> SIMPLE_BY.getElement(
-                            getWebDriver(),
-                            locator,
-                            waitTime,
-                            by -> force == null
-                                    ? ExpectedConditions.elementToBeClickable(by)
-                                    : ExpectedConditions.presenceOfElementLocated(by)),
-                    Constants.MOUSE_MOVE_TIME,
-                    Constants.MOUSE_MOVE_STEPS,
-                    force != null);
+                    locator,
+                    waitTime,
+                    by -> force == null
+                        ? ExpectedConditions.elementToBeClickable(by)
+                        : ExpectedConditions.presenceOfElementLocated(by)),
+                Constants.MOUSE_MOVE_TIME,
+                Constants.MOUSE_MOVE_STEPS,
+                force != null);
 
             if (getAutomatedBrowser() != null) {
                 getAutomatedBrowser().clickElementIfExists(
-                        force,
-                        locator,
-                        SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                                Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime,
-                        ifExistsOption);
+                    force,
+                    locator,
+                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                        Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime,
+                    ifExistsOption);
             }
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -665,26 +666,26 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
 
         try {
             MOUSE_MOVEMENT_UTILS.mouseGlide(
+                getWebDriver(),
+                (JavascriptExecutor) getWebDriver(),
+                () -> SIMPLE_BY.getElement(
                     getWebDriver(),
-                    (JavascriptExecutor) getWebDriver(),
-                    () -> SIMPLE_BY.getElement(
-                            getWebDriver(),
-                            locator,
-                            getDefaultExplicitWaitTime(),
-                            ExpectedConditions::elementToBeClickable),
-                    Constants.MOUSE_MOVE_TIME,
-                    Constants.MOUSE_MOVE_STEPS);
+                    locator,
+                    getDefaultExplicitWaitTime(),
+                    ExpectedConditions::elementToBeClickable),
+                Constants.MOUSE_MOVE_TIME,
+                Constants.MOUSE_MOVE_STEPS);
 
             if (getAutomatedBrowser() != null) {
                 getAutomatedBrowser().selectOptionByTextFromSelectIfExists(
-                        force,
-                        optionText,
-                        locator,
-                        SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                                Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime(),
-                        ifExistsOption);
+                    force,
+                    optionText,
+                    locator,
+                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                        Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime(),
+                    ifExistsOption);
             }
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -697,26 +698,26 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
 
         try {
             MOUSE_MOVEMENT_UTILS.mouseGlide(
+                getWebDriver(),
+                (JavascriptExecutor) getWebDriver(),
+                () -> SIMPLE_BY.getElement(
                     getWebDriver(),
-                    (JavascriptExecutor) getWebDriver(),
-                    () -> SIMPLE_BY.getElement(
-                            getWebDriver(),
-                            locator,
-                            waitTime,
-                            ExpectedConditions::elementToBeClickable),
-                    Constants.MOUSE_MOVE_TIME,
-                    Constants.MOUSE_MOVE_STEPS);
+                    locator,
+                    waitTime,
+                    ExpectedConditions::elementToBeClickable),
+                Constants.MOUSE_MOVE_TIME,
+                Constants.MOUSE_MOVE_STEPS);
 
             if (getAutomatedBrowser() != null) {
                 getAutomatedBrowser().selectOptionByTextFromSelectIfExists(
-                        force,
-                        optionText,
-                        locator,
-                        SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                                Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime,
-                        ifExistsOption);
+                    force,
+                    optionText,
+                    locator,
+                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                        Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime,
+                    ifExistsOption);
             }
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -729,26 +730,26 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
 
         try {
             MOUSE_MOVEMENT_UTILS.mouseGlide(
+                getWebDriver(),
+                (JavascriptExecutor) getWebDriver(),
+                () -> SIMPLE_BY.getElement(
                     getWebDriver(),
-                    (JavascriptExecutor) getWebDriver(),
-                    () -> SIMPLE_BY.getElement(
-                            getWebDriver(),
-                            locator,
-                            waitTime,
-                            ExpectedConditions::elementToBeClickable),
-                    Constants.MOUSE_MOVE_TIME,
-                    Constants.MOUSE_MOVE_STEPS);
+                    locator,
+                    waitTime,
+                    ExpectedConditions::elementToBeClickable),
+                Constants.MOUSE_MOVE_TIME,
+                Constants.MOUSE_MOVE_STEPS);
 
             if (getAutomatedBrowser() != null) {
                 getAutomatedBrowser().selectOptionByValueFromSelectIfExists(
-                        force,
-                        optionValue,
-                        locator,
-                        SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                                Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime,
-                        ifExistsOption);
+                    force,
+                    optionValue,
+                    locator,
+                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                        Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime,
+                    ifExistsOption);
             }
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -764,15 +765,15 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
 
             if (getAutomatedBrowser() != null) {
                 getAutomatedBrowser().populateElement(
-                        force,
-                        locator,
-                        keystrokeDelay,
-                        text,
-                        SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                                Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime(),
-                        ifExistsOption);
+                    force,
+                    locator,
+                    keystrokeDelay,
+                    text,
+                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                        Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime(),
+                    ifExistsOption);
             }
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -788,15 +789,15 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
 
             if (getAutomatedBrowser() != null) {
                 getAutomatedBrowser().populateElement(
-                        force,
-                        locator,
-                        keystrokeDelay,
-                        text,
-                        SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                                Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime,
-                        ifExistsOption);
+                    force,
+                    locator,
+                    keystrokeDelay,
+                    text,
+                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                        Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime,
+                    ifExistsOption);
             }
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -814,28 +815,28 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
 
             if (StringUtils.isNotBlank(force)) {
                 final WebElement element = SIMPLE_BY.getElement(
-                        getWebDriver(),
-                        locator,
-                        SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                                Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime(),
-                        ExpectedConditions::presenceOfElementLocated);
+                    getWebDriver(),
+                    locator,
+                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                        Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime(),
+                    ExpectedConditions::presenceOfElementLocated);
                 ((JavascriptExecutor) getWebDriver()).executeScript(
-                        "arguments[0].dispatchEvent(new Event('mouseover', { bubbles: true }))",
-                        element);
+                    "arguments[0].dispatchEvent(new Event('mouseover', { bubbles: true }))",
+                    element);
             } else {
                 // Retry to address the org.openqa.selenium.StaleElementReferenceException exception
                 RETRY_SERVICE.getTemplate().execute((RetryCallback<Void, WebElementException>) context -> {
                     final WebElement element = SIMPLE_BY.getElement(
-                            getWebDriver(),
-                            locator,
-                            SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime(),
-                            ExpectedConditions::presenceOfElementLocated);
+                        getWebDriver(),
+                        locator,
+                        SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime(),
+                        ExpectedConditions::presenceOfElementLocated);
                     action.moveToElement(element).perform();
                     return null;
                 });
             }
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -851,20 +852,20 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
 
             final Actions action = new Actions(getWebDriver());
             final WebElement element = SIMPLE_BY.getElement(
-                    getWebDriver(),
-                    locator,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime,
-                    ExpectedConditions::presenceOfElementLocated);
+                getWebDriver(),
+                locator,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime,
+                ExpectedConditions::presenceOfElementLocated);
 
             if (StringUtils.isNotBlank(force)) {
                 ((JavascriptExecutor) getWebDriver()).executeScript(
-                        "arguments[0].dispatchEvent(new Event('mouseover', { bubbles: true }))",
-                        element);
+                    "arguments[0].dispatchEvent(new Event('mouseover', { bubbles: true }))",
+                    element);
             } else {
                 action.moveToElement(element).perform();
             }
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -880,19 +881,19 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
 
             final Actions action = new Actions(getWebDriver());
             final WebElement element = SIMPLE_BY.getElement(
-                    getWebDriver(),
-                    locator,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime(),
-                    ExpectedConditions::presenceOfElementLocated);
+                getWebDriver(),
+                locator,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : getDefaultExplicitWaitTime(),
+                ExpectedConditions::presenceOfElementLocated);
             if (StringUtils.isNotBlank(force)) {
                 ((JavascriptExecutor) getWebDriver()).executeScript(
-                        "arguments[0].dispatchEvent(new Event('focus', { bubbles: true }))",
-                        element);
+                    "arguments[0].dispatchEvent(new Event('focus', { bubbles: true }))",
+                    element);
             } else {
                 action.moveToElement(element).perform();
             }
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -908,20 +909,20 @@ public class MouseMovementDecorator extends AutomatedBrowserBase {
 
             final Actions action = new Actions(getWebDriver());
             final WebElement element = SIMPLE_BY.getElement(
-                    getWebDriver(),
-                    locator,
-                    SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
-                            Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime,
-                    ExpectedConditions::presenceOfElementLocated);
+                getWebDriver(),
+                locator,
+                SYSTEM_PROPERTY_UTILS.getPropertyAsBoolean(
+                    Constants.MOVE_CURSOR_TO_ELEMENT, false) ? 0 : waitTime,
+                ExpectedConditions::presenceOfElementLocated);
 
             if (StringUtils.isNotBlank(force)) {
                 ((JavascriptExecutor) getWebDriver()).executeScript(
-                        "arguments[0].dispatchEvent(new Event('focus', { bubbles: true }))",
-                        element);
+                    "arguments[0].dispatchEvent(new Event('focus', { bubbles: true }))",
+                    element);
             } else {
                 action.moveToElement(element).perform();
             }
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
