@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.retry.RetryCallback;
@@ -91,7 +92,7 @@ public class HighlightDecorator extends AutomatedBrowserBase {
 
                 return null;
             });
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -123,7 +124,7 @@ public class HighlightDecorator extends AutomatedBrowserBase {
 
                 originalStyles.remove(locator);
             }
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }

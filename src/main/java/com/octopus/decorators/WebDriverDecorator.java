@@ -45,6 +45,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -580,7 +581,7 @@ public class WebDriverDecorator extends AutomatedBrowserBase {
                     return null;
                 });
             }
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -617,7 +618,7 @@ public class WebDriverDecorator extends AutomatedBrowserBase {
                         waitTime,
                         ExpectedConditions::elementToBeClickable)).selectByVisibleText(optionText);
             }
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -648,7 +649,7 @@ public class WebDriverDecorator extends AutomatedBrowserBase {
                         waitTime,
                         ExpectedConditions::elementToBeClickable)).selectByValue(optionValue);
             }
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -672,7 +673,7 @@ public class WebDriverDecorator extends AutomatedBrowserBase {
                             waitTime,
                             ExpectedConditions::elementToBeClickable),
                     NumberUtils.toInt(keystrokeDelay, Constants.DEFAULT_INPUT_DELAY));
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -696,7 +697,7 @@ public class WebDriverDecorator extends AutomatedBrowserBase {
                             waitTime,
                             ExpectedConditions::presenceOfElementLocated),
                     0);
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -743,7 +744,7 @@ public class WebDriverDecorator extends AutomatedBrowserBase {
             } else {
                 element.clear();
             }
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -787,7 +788,7 @@ public class WebDriverDecorator extends AutomatedBrowserBase {
             }
 
             return element.getText();
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -819,7 +820,7 @@ public class WebDriverDecorator extends AutomatedBrowserBase {
                     locator,
                     waitTime,
                     ExpectedConditions::presenceOfElementLocated);
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -839,7 +840,7 @@ public class WebDriverDecorator extends AutomatedBrowserBase {
                     locator,
                     waitTime,
                     ExpectedConditions::elementToBeClickable);
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -1043,7 +1044,7 @@ public class WebDriverDecorator extends AutomatedBrowserBase {
                     Integer.parseInt(offset == null ? "0" : offset),
                     scrollTime);
             Try.run(() -> Thread.sleep(scrollTime));
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
@@ -1257,7 +1258,7 @@ public class WebDriverDecorator extends AutomatedBrowserBase {
             if (!Pattern.compile(regex).matcher(content).matches()) {
                 throw new ValidationException("The text content \"" + content + "\" does not match the regex \"" + regex + "\"");
             }
-        } catch (final WebElementException ex) {
+        } catch (final WebElementException | StaleElementReferenceException ex) {
             if (StringUtils.isEmpty(ifExistsOption)) {
                 throw ex;
             }
